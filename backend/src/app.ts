@@ -48,5 +48,6 @@ app.get('/revenue', (req, res) => {
 
 app.get('/views', (req, res) => {
   connect();
+  console.log('hello');
   res.send('Produce a ranked list of watch counts from the top-3 video tags')
 })

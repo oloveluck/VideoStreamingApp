@@ -14,7 +14,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mysql_1 = __importDefault(require("mysql"));
 const connect = () => __awaiter(this, void 0, void 0, function* () {
     let db = yield mysql_1.default.createConnection({
-        host: '127.0.0.1',
+        host: 'localhost',
         user: 'root',
         password: null,
         database: 'chinook'
