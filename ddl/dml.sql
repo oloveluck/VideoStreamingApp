@@ -55,17 +55,18 @@ INSERT INTO `shows` (Name, Description) VALUES ('Sesame Street', 'Muppets teach 
 INSERT INTO `shows` (Name, Description) VALUES ('Ozark', 'Nice looking guy launders money');
 INSERT INTO `shows` (Name, Description) VALUES ('Spongebob Squarepants', 'Small sponge lives life as a fry-cook');
 INSERT INTO `shows` (Name, Description) VALUES ('Community', 'Community college students study Spanish');
+INSERT INTO `shows` (Name, Description) VALUES ('Breaking Bad', 'Walter White becomes Heisenberg');
 
-INSERT INTO `Season` (Shows, Video, Number) VALUES ('Skerlock', 1, 2); 
-INSERT INTO `Season` (Shows, Video, Number) VALUES ('Skerlock', 2, 1);
+INSERT INTO `Season` (Shows, Video, Number) VALUES ('Sherlock', 1, 2); 
+INSERT INTO `Season` (Shows, Video, Number) VALUES ('Sherlock', 2, 1);
 INSERT INTO `Season` (Shows, Video, Number) VALUES ('Champions League Soccer', 7, 2012);
 INSERT INTO `Season` (Shows, Video, Number) VALUES ('NBA', 8, 2008);
 INSERT INTO `Season` (Shows, Video, Number) VALUES ('The Mandalorian', 3, 1);
 INSERT INTO `Season` (Shows, Video, Number) VALUES ('The Mandalorian', 4, 1);
-INSERT INTO `Season` (Shows Video, Number) VALUES ('Binging With Babish', 5, 2);
-INSERT INTO `Season` (Shows Video, Number) VALUES ('Binging With Babish', 6, 3);
-INSERT INTO `Season` (Shows Video, Number) VALUES ('Breaking Bad', 9, 4);
-INSERT INTO `Season` (Shows Video, Number) VALUES ('Breaking Bad', 10, 5);
+INSERT INTO `Season` (Shows, Video, Number) VALUES ('Binging With Babish', 5, 2);
+INSERT INTO `Season` (Shows, Video, Number) VALUES ('Binging With Babish', 6, 3);
+INSERT INTO `Season` (Shows, Video, Number) VALUES ('Breaking Bad', 9, 4);
+INSERT INTO `Season` (Shows, Video, Number) VALUES ('Breaking Bad', 10, 5);
 
 
 INSERT INTO `platform` (Name, IsMobile) VALUES ('AppleTV', 0);
@@ -124,11 +125,11 @@ INSERT INTO `video` (ReleaseDate, Title, Description) VALUES ('1964-10-01', 'Har
 INSERT INTO `video` (ReleaseDate, Title, Description) VALUES ('2012-19-05', 'Chelsea vs Bayern Munich', 'Champions League Final in Munich');
 -- 7
 INSERT INTO `video` (ReleaseDate, Title, Description) VALUES ('2008-16-06', 'Celtics vs Lakers', 'NBA finals game 6');
---8
+-- 8
 INSERT INTO `video` (ReleaseDate, Title, Description) VALUES ('1964-10-01', 'Say My Name', 'As Walt unveils his new plan to keep all the hijacked chemicals and expand his business, the DEA investigation closes in on Mike.');
---9
+-- 9
 INSERT INTO `video` (ReleaseDate, Title, Description) VALUES ('1964-10-01', 'Face Off', 'After their plan to kill Gus fails, Walt and Jesse must act fast if they are to avoid being killed in revenge.');
---10
+-- 10
 INSERT INTO `video` (ReleaseDate, Title, Description) VALUES ('1964-10-01', 'Goldfinger', 'A martini. Shaken, not stirred');
 
 
