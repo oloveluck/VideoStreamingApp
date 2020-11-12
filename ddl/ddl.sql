@@ -11,11 +11,13 @@ CREATE TABLE Video (
 	ID INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	ReleaseDate DATE, 
 	Title VARCHAR(255), 
-	Description VARCHAR(255)
+	Description VARCHAR(255),
+	Duration DOUBLE
 );
 CREATE TABLE App (
 	Name VARCHAR(255) PRIMARY KEY, 
-	Description VARCHAR(255)
+	Description VARCHAR(255),
+	Cost DOUBLE
 );
 CREATE TABLE Shows (
 	Name VARCHAR(255) PRIMARY KEY,
@@ -68,6 +70,14 @@ CREATE TABLE WantsToWatch (
 	FOREIGN KEY(Video) REFERENCES Video(ID)
 );
 
+CREATE TABLE ShowWantsToWatch (
+	User VARCHAR(255),
+	FOREIGN KEY(User) REFERENCES Users(Email),
+	ShowName VARCHAR(255),
+	FOREIGN KEY(ShowName) REFERENCES Shows(Name),
+    PRIMARY KEY(ShowName, User)
+);
+
 CREATE TABLE UserWatched (
 	User VARCHAR(255),
 	FOREIGN KEY(User) REFERENCES Users(Email),
@@ -75,3 +85,21 @@ CREATE TABLE UserWatched (
     PRIMARY KEY(Video, User),
 	FOREIGN KEY(Video) REFERENCES Video(ID)
 ); 
+
+
+CREATE TABLE UserApps (
+	USER VARCHAR(255),
+	FOREIGN KEY(User) REFERENCES Users(Email),
+	App VARCHAR(255),
+	FOREIGN KEY(App) REFERENCES App(Name),
+	PRIMARY KEY(USER, App)
+);
+
+
+CREATE TABLE VideoTag (
+	Video INT(8) UNSIGNED,
+	tagName VARCHAR(255),
+	FOREIGN KEY(Video) REFERENCES Video(ID),
+	PRIMARY KEY(tagName, Video)
+);
+	
