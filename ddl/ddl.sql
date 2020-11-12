@@ -43,14 +43,14 @@ CREATE TABLE PlatformApp (
 CREATE TABLE Season (
 	Shows VARCHAR(255), 
 	FOREIGN KEY(Shows) REFERENCES Shows(Name), 
-	Video INT(8),
+	Video INT(8) UNSIGNED,
     PRIMARY KEY(Shows, Video),
 	FOREIGN KEY(Video) REFERENCES Video(ID), 
 	Number INT(4)
 );
 
 CREATE TABLE VideoApp (
-	Video INT(8),
+	Video INT(8) UNSIGNED,
 	FOREIGN KEY(Video) REFERENCES Video(ID), 
 	App VARCHAR(255),
     PRIMARY KEY(Video, App),
@@ -60,24 +60,24 @@ CREATE TABLE VideoApp (
 
 CREATE TABLE UserLikes (
 	User VARCHAR(255),
-	FOREIGN KEY(User) REFERENCES User(Email), 
-	Video INT(8),
+	FOREIGN KEY(User) REFERENCES Users(Email), 
+	Video INT(8) UNSIGNED,
     PRIMARY KEY(Video, User),
     FOREIGN KEY(Video) REFERENCES Video(ID)
 );
 
 CREATE TABLE WantsToWatch (
 	User VARCHAR(255),
-	FOREIGN KEY(User) REFERENCES User(Email), 
-	Video INT(8),
+	FOREIGN KEY(User) REFERENCES Users(Email), 
+	Video INT(8) UNSIGNED,
     PRIMARY KEY(Video, User),
 	FOREIGN KEY(Video) REFERENCES Video(ID)
 );
 
 CREATE TABLE UserWatched (
 	User VARCHAR(255),
-	FOREIGN KEY(User) REFERENCES User(Email), 
-	Video INT(8),
+	FOREIGN KEY(User) REFERENCES Users(Email), 
+	Video INT(8) UNSIGNED,
     PRIMARY KEY(Video, User),
 	FOREIGN KEY(Video) REFERENCES Video(ID)
 );
