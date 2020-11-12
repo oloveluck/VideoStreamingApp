@@ -12,8 +12,30 @@ FROM (((((
         userlikes ON userlikes.Video=video.ID) RIGHT JOIN users ON userlikes.User=users.Email
 GROUP BY likedMobileVideo
 ORDER BY likedMobileVideo DESC;
-
+/*
 A list of users and whether or not they liked a video on a mobile platform. If they did, the title of the video is included.
+1pt Strong motivation,
+1pt Right join,
+1pt Grouping,
+2pt 2 Subqueries
+1pt 3+ tables
+*/
+
+SELECT users.Email AS Email, video.Title AS freeToWatch
+FROM (((
+    SELECT video.Title AS freeVideo
+    FROM video INNER JOIN videoapp ON video.ID=videoapp.Video
+    WHERE videoapp.Subscription = 0
+    ) AS fv INNER JOIN Video ON fv.freeVideo=video.ID) INNER JOIN wantstowatch ON wantstowatch.Video=video.ID) RIGHT JOIN users ON users.Email=wantstowatch.User
+ORDER BY Email ASC;
+/* List all videos that people want to watch and are free 
+1pt Strong motivation,
+1pt Right join
+1pt Order
+1pt 3+ tables
+1pt Aggregate
+1pt Where not used on join
+*/
 
 /* Find the the app available on iOS that has the most videos that Ryan has watched but does not like 
 1 point, strong motivation, this query is relevant to determining recommendations for advertising and is a relevant and interesting point of data
