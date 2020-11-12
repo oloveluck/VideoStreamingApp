@@ -1,41 +1,75 @@
-CREATE TABLE Users (
-	FirstName varchar(255), 
-	LastName varchar(255), 
-	Email varchar(255), 
-	Password varchar(255), 
-	Country varchar(255)
-);
+CREATE TABLE User (
+	FirstName VARCHAR(255), 
+	LastName VARCHAR(255), 
+	Email VARCHAR(255) PRIMARY KEY,
+	Password VARCHAR(255), 
+	Country VARCHAR(255)
+)
 
-CREATE DOMAIN PLATFORM (
+CREATE TABLE Video (
+	ID INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	Release DATE, 
+	Title VARCHAR(255), 
+	Desc VARCHAR(255)
+)
 
-);
+CREATE TABLE App (
+	Name VARCHAR(255) PRIMARY KEY, 
+	Desc VARCHAR(255)
+)
 
-CREATE DOMAIN TAGS (
+CREATE TABLE Show (
+	Name VARCHAR(255) PRIMARY KEY,
+	Desc VARCHAR(255)
+)
 
-);
+CREATE TABLE Platform (
+	Name VARCHAR(255) PRIMARY KEY, 
+	IsMobile TINYINT(1)
+)
 
-CREATE TABLE Apps (
-	Name varchar(255), 
-	Description varchar(255), 
-	Platform PLATFORM, 
-	Mobile bit
-);
+CREATE TABLE PlatformApp (
+	Platform VARCHAR(255) PRIMARY KEY, 
+	Platform VARCHAR(255) FOREIGN KEY REFERENCES Platform(Name), 
+	App VARCHAR(255) PRIMARY KEY, 
+	App VARCHAR(255) FOREIGN KEY REFERENCES App(Name), 
+	Rating UNSIGNED DOUBLE, 
+	Version UNSIGNED DOUBLE
+)
 
-CREATE TABLE Videos (
-	Title varchar(255), 
-	Description varchar(255), 
-	ReleaseDate varchar(255), 
-	Duration int, 
-	HostApp Apps, 
-	Tags TAGS
-);
+CREATE TABLE Season (
+	Show VARCHAR(255) PRIMARY KEY, 
+	Show VARCHAR(255) FOREIGN KEY REFERENCES Show(Title), 
+	Video INT(8) PRIMARY KEY, 
+	Video INT(8) FOREIGN KEY REFERENCES Video(ID), 
+	Number INT(4)
+)
 
-CREATE DOMAIN SeqVideo (
+CREATE TABLE VideoApp (
+	Video INT(8) PRIMARY KEY, 
+	Video INT(8) FOREIGN KEY REFERENCES Video(ID), 
+	App VARCHAR(255) PRIMARY KEY, 
+	App VARCHAR(255) FOREIGN KEY REFERENCES App(Name), 
+	Subscription TINYINT(1)
+)
 
-);
+CREATE TABLE UserLikes (
+	User VARCHAR(255) PRIMARY KEY, 
+	User VARCHAR(255) FOREIGN KEY REFERENCES User(Email), 
+	Video INT(8) PRIMARY KEY, 
+	Video INT(8) FOREIGN KEY REFERENCES Video(ID)
+)
 
-CREATE TABLE Shows (
-	Title varchar(255), 
-	Description varchar(255), 
-	SeasonSequence SeqVideo
-);
+CREATE TABLE WantsToWatch (
+	User VARCHAR(255) PRIMARY KEY, 
+	User VARCHAR(255) FOREIGN KEY REFERENCES User(Email), 
+	Video INT(8) PRIMARY KEY, 
+	Video INT(8) FOREIGN KEY REFERENCES Video(ID)
+)
+
+CREATE TABLE UserWatched (
+	User VARCHAR(255) PRIMARY KEY, 
+	User VARCHAR(255) FOREIGN KEY REFERENCES User(Email), 
+	Video INT(8) PRIMARY KEY, 
+	Video INT(8) FOREIGN KEY REFERENCES Video(ID)
+)
