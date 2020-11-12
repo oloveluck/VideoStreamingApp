@@ -27,7 +27,8 @@ INSERT INTO `video` (ReleaseDate, Title, Description, Duration) VALUES ('2020-12
 
 SELECT *
 FROM show s join Season se on s.Name = se.Shows
-	join video v on v.Name =  
+	join video v on v.Name =  se.Video;
+
 
 
 -- find all free videos on a particular platform. Platform is parameterized.
@@ -60,6 +61,7 @@ ORDER BY (revenue) DESC;
 
 SELECT *
 FROM Video v JOIN VideoTag vt on v.ID = vt.Video;
+
 
 
 
