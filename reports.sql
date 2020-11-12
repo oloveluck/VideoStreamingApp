@@ -14,3 +14,90 @@ GROUP BY likedMobileVideo
 ORDER BY likedMobileVideo DESC;
 
 A list of users and whether or not they liked a video on a mobile platform. If they did, the title of the video is included.
+
+/* Find the the app available on iOS that has the most videos that Ryan has watched but does not like 
+1 point, strong motivation, this query is relevant to determining recommendations for advertising and is a relevant and interesting point of data
+1 point, two where conditions in the subquery not used for joins to determine name
+1 point, clear grouping
+1 point, clear aggregate functions
+1 point, query result via EXCEPT, which is basically a union/intersect
+1 point, two subqueries
+1 point, contains a left join
+1 point, 5 joined tables
+8 points total.
+*/
+
+select videoapp.App
+from app inner join platformapp inner join platform inner join videoapp left JOIN
+(Select wantstowatch.Video as Video
+from users inner join wantstowatch
+on users.Email = wantstowatch.User
+where users.FirstName = "Ryan" and users.LastName = "Milligan"
+Except
+Select userlikes.Video as Video
+from users inner join userlikes
+on users.Email = userlikes.User
+where users.FirstName = "Ryan" and users.LastName = "Milligan") as ryans
+on app.Name = platformapp.App and platformapp.Platform = platform.Name and app.Name = videoapp.Video and videoapp.Video = ryans.Video
+where platform.Name = "IOS"
+group by videoapp.App
+having COUNT(*) = (
+select max(big.counts) from (SELECT videoapp.App, COUNT(*) as counts
+from app inner join platformapp inner join platform inner join videoapp left JOIN
+(Select wantstowatch.Video as Video
+from users inner join wantstowatch
+on users.Email = wantstowatch.User
+where users.FirstName = "Ryan" and users.LastName = "Milligan"
+Except
+Select userlikes.Video as Video
+from users inner join userlikes
+on users.Email = userlikes.User
+where users.FirstName = "Ryan" and users.LastName = "Milligan") as ryans
+on app.Name = platformapp.App and platformapp.Platform = platform.Name and app.Name = videoapp.Video and videoapp.Video = ryans.Video
+where platform.Name = "IOS"
+group by videoapp.App) as big)
+
+/* given a video name, produce all videos in its season, or just details on the video if it does not belong to a season 
+3 tables joined
+non inner join
+2 subqueries
+2 ordered fields
+where clause not used for joins
+strong motivation as this is a useful function to creating lists and recommendations for a user
+*/
+
+select video.ID, video.ReleaseDate, video.Title as videoTitle, video.Description as videoDescription, shows.Name as showName, shows.Description as showDescription
+from video inner join season inner join shows
+on season.Video = video.ID and season.Shows = shows.Name
+where season.Number IN
+(select season.Number
+from video left join season
+on season.Video = video.ID
+where video.Title = "The Child")
+and season.Shows IN 
+(select season.Shows
+from video left join season
+on season.Video = video.ID
+where video.Title = "The Child")
+order by video.ID, video.Title
+
+/* Lists every show that a specific paramaterized app has videos for */
+/* 1 point for strong motivation as this is a very useful datapoint for selecting apps based off their offerings
+3 tables joined
+left join
+2 subqueries
+aggregate function
+ordering by multiple fields
+*/
+SELECT *
+from shows inner join season
+where season.Number in
+(select season.number
+from app inner join videoapp inner join season
+where app.Name = "Netflix")
+and season.Shows IN
+(select season.Shows
+from app inner join videoapp inner join season
+where app.Name = "Netflix")
+GROUP by shows.Name
+order by shows.Name, season.Video
