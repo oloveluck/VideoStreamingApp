@@ -1,6 +1,6 @@
 DROP database project;
 CREATE database project;
-CREATE TABLE Users (
+CREATE TABLE user (
 	FirstName VARCHAR(255), 
 	LastName VARCHAR(255), 
 	Email VARCHAR(255) PRIMARY KEY,
@@ -8,24 +8,24 @@ CREATE TABLE Users (
 	Country VARCHAR(255)
 );
 
-CREATE TABLE Video (
+CREATE TABLE video (
 	ID INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	ReleaseDate DATE, 
 	Title VARCHAR(255), 
 	Description VARCHAR(255)
 );
 
-CREATE TABLE App (
+CREATE TABLE app (
 	Name VARCHAR(255) PRIMARY KEY, 
 	Description VARCHAR(255)
 );
 
-CREATE TABLE Shows (
+CREATE TABLE show (
 	Name VARCHAR(255) PRIMARY KEY,
 	Description VARCHAR(255)
 );
 
-CREATE TABLE Platform (
+CREATE TABLE platform (
 	Name VARCHAR(255) PRIMARY KEY, 
 	IsMobile TINYINT(1)
 );
@@ -41,7 +41,7 @@ CREATE TABLE PlatformApp (
 );
 
 CREATE TABLE Season (
-	Shows VARCHAR(255), 
+	Show VARCHAR(255), 
 	FOREIGN KEY(Shows) REFERENCES Shows(Name), 
 	Video INT(8) UNSIGNED,
     PRIMARY KEY(Shows, Video),
