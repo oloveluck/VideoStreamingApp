@@ -1,5 +1,3 @@
-DROP database project;
-CREATE database project;
 CREATE TABLE Users (
 	FirstName VARCHAR(255), 
 	LastName VARCHAR(255), 
@@ -12,14 +10,15 @@ CREATE TABLE Video (
 	ReleaseDate DATE, 
 	Title VARCHAR(255), 
 	Description VARCHAR(255),
-	Duration DOUBLE
+	Duration DOUBLE,
+	Platform VARCHAR(255)
 );
 CREATE TABLE App (
 	Name VARCHAR(255) PRIMARY KEY, 
 	Description VARCHAR(255),
 	Cost DOUBLE
 );
-CREATE TABLE Shows (
+CREATE TABLE `Show` (
 	Name VARCHAR(255) PRIMARY KEY,
 	Description VARCHAR(255)
 );
@@ -36,13 +35,16 @@ CREATE TABLE PlatformApp (
 	Rating DOUBLE, 
 	Version DOUBLE
 );
-CREATE TABLE Season (
-	Shows VARCHAR(255), 
-	FOREIGN KEY(Shows) REFERENCES Shows(Name),
+
+
+CREATE TABLE Episode (
+	`Show`VARCHAR(255),
 	Video INT(8) UNSIGNED,
-    PRIMARY KEY(Shows, Video),
-	FOREIGN KEY(Video) REFERENCES Video(ID), 
-	Number INT(4)
+	EpisodeNumber INT NOT NULL,
+	SeasonNumber INT NOT NULL,
+	FOREIGN KEY(`Show`) REFERENCES `Show`(Name),
+    PRIMARY KEY(`Show`, Video),
+	FOREIGN KEY(Video) REFERENCES Video(ID)
 );
 
 CREATE TABLE VideoApp (
@@ -62,7 +64,7 @@ CREATE TABLE UserLikes (
     FOREIGN KEY(Video) REFERENCES Video(ID)
 );
 
-CREATE TABLE WantsToWatch (
+CREATE TABLE ToWatch (
 	User VARCHAR(255),
 	FOREIGN KEY(User) REFERENCES Users(Email),
 	Video INT(8) UNSIGNED,
@@ -70,11 +72,11 @@ CREATE TABLE WantsToWatch (
 	FOREIGN KEY(Video) REFERENCES Video(ID)
 );
 
-CREATE TABLE ShowWantsToWatch (
+CREATE TABLE ShowToWatch (
 	User VARCHAR(255),
 	FOREIGN KEY(User) REFERENCES Users(Email),
 	ShowName VARCHAR(255),
-	FOREIGN KEY(ShowName) REFERENCES Shows(Name),
+	FOREIGN KEY(ShowName) REFERENCES `Show`(Name),
     PRIMARY KEY(ShowName, User)
 );
 
