@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>Welcome to Yet Another TV App</h1>
+        <a href="https://github.com/oloveluck/VideoStreamingApp">See on github</a>
+        <h3>Produce a ranked list of watched counts from the top 3 video tags</h3>
+        <button onclick="getData()">Get list</button>
+        <p id="output"> Results are shown here!</p>
+        <h3></h3>
+        <script>
+            const getData = async () => {
+                let result = await fetch('http://localhost:8080/views');
+                let resultText = await result.text();
+                document.getElementById("output").innerHTML = resultText;
+            }
+        </script>
+    </body>
+</html>
