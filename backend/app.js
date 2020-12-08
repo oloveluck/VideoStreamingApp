@@ -442,7 +442,7 @@ app.get('/season', (req, res) => {
 
 
 // -- list every show that a specific paramaterized app has videos for
-app.get('/season', (req, res) => {
+app.get('/appshows', (req, res) => {
   const conn = mysql.createConnection(connInfo);
   conn.connect((err) => {
     if (err) {

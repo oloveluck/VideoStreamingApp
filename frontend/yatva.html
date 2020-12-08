@@ -77,9 +77,14 @@
             <button onclick="freevideos()">Get</button>
         </div>
         <div id="season">
-            <h4>Find the the app available on iOS that has the most videos that user with first name ? and last name ? has watched but does not like</h4>
+            <h4>given a video name, produce all videos in its season, or just details on the video if it does not belong to a season</h4>
             <label>Video: <input type="text" name="video"></label>
             <button onclick="season()">Get</button>
+        </div>
+        <div id="appshows">
+            <h4>list every show that a specific paramaterized app has videos for</h4>
+            <label>App: <input type="text" name="app"></label>
+            <button onclick="appshows()">Get</button>
         </div>
         <script>
             const BASE_URL = "http://localhost:8080"
@@ -120,7 +125,7 @@
 
             const longvideos = () => {
                 let urlencoded = getUrlEncoded("longvideos");
-                getData(`${BASE_URL}/videos/released`, "GET", urlencoded);
+                getData(`${BASE_URL}/video/released`, "GET", urlencoded);
             }
 
             const revenue = () => {
@@ -149,21 +154,36 @@
                 getData(`${BASE_URL}/season`, "GET", urlencoded);
             }
 
+            const appshows = () => {
+                let urlencoded = getUrlEncoded("appshows");
+                getData(`${BASE_URL}/appshows`, "GET", urlencoded);
+            }
+
 
             
 
             const getData = async (url, type, urlencoded) => {
-                let myHeaders = new Headers();
-                myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
-                let requestOptions = {
+                let result;
+                let text = '';
+                if(type === "GET") {
+                    if(urlencoded) {
+                        url = `${url}?${urlencoded}`
+                    } 
+                    console.log('URL', url);
+                    result = await fetch(url);
+                   
+                } else {
+                    let myHeaders = new Headers();
+                    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+                    let requestOptions = {
                     method: type,
                     headers: myHeaders,
                     body: urlencoded,
                     mode:'cors'
+                    }
+                    result = await fetch(url, requestOptions);
                 }
-                let text = '';
-                let result = await fetch(url, requestOptions);
+                
                 if(result.ok) {
                     let resultjson = await result.json();
                     if(resultjson.hasOwnProperty("rows")) {
