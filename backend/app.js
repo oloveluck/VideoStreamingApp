@@ -11,7 +11,7 @@ const connInfo = {
   host: "localhost",
   user: "root",
   password: "",
-  database: "project",
+  database: "yatva",
 };
 
 const PORT = 8080;
@@ -33,13 +33,12 @@ app.post('/register', (req, res) => {
     if (err) {
       res.status(500).json({"msg": err.sqlMessage})
     } else {
-      console.log(req.body);
       const params = [req.body['firstName'], req.body['lastName'],
         req.body['email'], req.body['password'], req.body['country']];
       const sql = "INSERT INTO `users` (FirstName, LastName, Email, Password, Country) VALUES (?, ?, ?, Password( ? ), ?);";
       conn.query(sql, params, (err, result, fields) => {
         if (err) {
-          console.log(params)
+          console.log(err.sqlMessage);
           res.status(200).json({"msg": err.sqlMessage})
         } else {
           // for local testing only
@@ -317,7 +316,7 @@ app.get('/worst-app', (req, res) => {
           res.header("Access-Control-Allow-Origin", "*");
           console.log(result);
           res.status(200).json({
-            rows: result.slice(0, 3)
+            rows: result
           });
         }
       });
@@ -357,7 +356,7 @@ app.get('/liked-mobile', (req, res) => {
           res.header("Access-Control-Allow-Origin", "*");
           console.log(result);
           res.status(200).json({
-            rows: result.slice(0, 3)
+            rows: result
           });
         }
       });
@@ -391,7 +390,7 @@ app.get('/free-videos', (req, res) => {
           res.header("Access-Control-Allow-Origin", "*");
           console.log(result);
           res.status(200).json({
-            rows: result.slice(0, 3)
+            rows: result
           });
         }
       });
@@ -432,7 +431,7 @@ app.get('/season', (req, res) => {
           res.header("Access-Control-Allow-Origin", "*");
           console.log(result);
           res.status(200).json({
-            rows: result.slice(0, 3)
+            rows: result
           });
         }
       });
