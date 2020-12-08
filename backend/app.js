@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const express = require('express')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 const app = express()
 
 ///////////////////////////////////////
@@ -15,6 +16,7 @@ const connInfo = {
 
 const PORT = 8080;
 
+app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 
 ///////////////////////////////////////
@@ -38,7 +40,7 @@ app.post('/register', (req, res) => {
       conn.query(sql, params, (err, result, fields) => {
         if (err) {
           console.log(params)
-          res.status(500).json({"msg": err.sqlMessage})
+          res.status(200).json({"msg": err.sqlMessage})
         } else {
           // for local testing only
           res.header("Access-Control-Allow-Origin", "*");
@@ -65,7 +67,7 @@ app.post('/subscribe', (req, res) => {
       conn.query(sql, params, (err, result, fields) => {
         if (err) {
           console.log(params)
-          res.status(500).json({"msg": err.sqlMessage})
+          res.status(200).json({"msg": err.sqlMessage})
         } else {
           // for local testing only
           res.header("Access-Control-Allow-Origin", "*");
@@ -92,7 +94,7 @@ app.post('/list/add', (req, res) => {
       conn.query(sql, params, (err, result, fields) => {
         if (err) {
           console.log(params)
-          res.status(500).json({"msg": err.sqlMessage})
+          res.status(200).json({"msg": err.sqlMessage})
         } else {
           // for local testing only
           res.header("Access-Control-Allow-Origin", "*");
@@ -120,7 +122,7 @@ app.post('/version', (req, res) => {
       conn.query(sql, params, (err, result, fields) => {
         if (err) {
           console.log(params)
-          res.status(500).json({"msg": err.sqlMessage})
+          res.status(200).json({"msg": err.sqlMessage})
         } else {
           // for local testing only
           res.header("Access-Control-Allow-Origin", "*");
@@ -148,7 +150,7 @@ app.post('/video/add', (req, res) => {
       conn.query(sql, params, (err, result, fields) => {
         if (err) {
           console.log(params)
-          res.status(500).json({"msg": err.sqlMessage})
+          res.status(200).json({"msg": err.sqlMessage})
         } else {
           // for local testing only
           res.header("Access-Control-Allow-Origin", "*");
@@ -175,7 +177,7 @@ app.get('/top-10', (req, res) => {
       conn.query(sql, params, (err, result, fields) => {
         if (err) {
           console.log(params)
-          res.status(500).json({"msg": err.sqlMessage})
+          res.status(200).json({"msg": err.sqlMessage})
         } else {
           // for local testing only
           res.header("Access-Control-Allow-Origin", "*");
@@ -202,7 +204,7 @@ app.get('/free', (req, res) => {
       conn.query(sql, params, (err, result, fields) => {
         if (err) {
           console.log(params)
-          res.status(500).json({"msg": err.sqlMessage})
+          res.status(200).json({"msg": err.sqlMessage})
         } else {
           // for local testing only
           res.header("Access-Control-Allow-Origin", "*");
@@ -228,7 +230,7 @@ app.get('/video/released', (req, res) => {
       conn.query(sql, params, (err, result, fields) => {
         if (err) {
           console.log(params)
-          res.status(500).json({"msg": err.sqlMessage})
+          res.status(200).json({"msg": err.sqlMessage})
         } else {
           // for local testing only
           res.header("Access-Control-Allow-Origin", "*");
@@ -255,7 +257,7 @@ app.get('/revenue', (req, res) => {
       conn.query(sql, params, (err, result, fields) => {
         if (err) {
           console.log(params)
-          res.status(500).json({"msg": err.sqlMessage})
+          res.status(200).json({"msg": err.sqlMessage})
         } else {
           // for local testing only
           res.header("Access-Control-Allow-Origin", "*");
@@ -282,7 +284,7 @@ app.get('/views', (req, res) => {
       conn.query(sql, params, (err, result, fields) => {
         if (err) {
           console.log(params)
-          res.status(500).json({"msg": err.sqlMessage})
+          res.status(200).json({"msg": err.sqlMessage})
         } else {
           // for local testing only
           res.header("Access-Control-Allow-Origin", "*");
@@ -309,7 +311,7 @@ app.get('/worst-app', (req, res) => {
       conn.query(sql, params, (err, result, fields) => {
         if (err) {
           console.log(params)
-          res.status(500).json({"msg": err.sqlMessage})
+          res.status(200).json({"msg": err.sqlMessage})
         } else {
           // for local testing only
           res.header("Access-Control-Allow-Origin", "*");
@@ -349,7 +351,7 @@ app.get('/liked-mobile', (req, res) => {
       conn.query(sql, params, (err, result, fields) => {
         if (err) {
           console.log(params)
-          res.status(500).json({"msg": err.sqlMessage})
+          res.status(200).json({"msg": err.sqlMessage})
         } else {
           // for local testing only
           res.header("Access-Control-Allow-Origin", "*");
@@ -383,7 +385,7 @@ app.get('/free-videos', (req, res) => {
       conn.query(sql, params, (err, result, fields) => {
         if (err) {
           console.log(params)
-          res.status(500).json({"msg": err.sqlMessage})
+          res.status(200).json({"msg": err.sqlMessage})
         } else {
           // for local testing only
           res.header("Access-Control-Allow-Origin", "*");
@@ -424,7 +426,7 @@ app.get('/season', (req, res) => {
       conn.query(sql, params, (err, result, fields) => {
         if (err) {
           console.log(params)
-          res.status(500).json({"msg": err.sqlMessage})
+          res.status(200).json({"msg": err.sqlMessage})
         } else {
           // for local testing only
           res.header("Access-Control-Allow-Origin", "*");
@@ -463,7 +465,7 @@ app.get('/season', (req, res) => {
       conn.query(sql, params, (err, result, fields) => {
         if (err) {
           console.log(params)
-          res.status(500).json({"msg": err.sqlMessage})
+          res.status(200).json({"msg": err.sqlMessage})
         } else {
           // for local testing only
           res.header("Access-Control-Allow-Origin", "*");
