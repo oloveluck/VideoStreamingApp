@@ -198,7 +198,7 @@ app.get('/free', (req, res) => {
     if (err) {
       res.status(500).json({"msg": err.sqlMessage})
     } else {
-      const params = [req.body['platform']];
+      const params = [req.query.platform];
       const sql = `SELECT v.Title as title FROM Video v JOIN VideoApp va ON v.ID = va.Video JOIN App a ON a.Name = va.App WHERE va.Subscription = 0 AND v.Platform = ? ORDER BY title DESC;`;
       conn.query(sql, params, (err, result, fields) => {
         if (err) {
@@ -224,7 +224,7 @@ app.get('/video/released', (req, res) => {
     if (err) {
       res.status(500).json({"msg": err.sqlMessage})
     } else {
-      const params = [req.body['duration']];
+      const params = [req.query.duration];
       const sql = `SELECT v.Title as title, v.ReleaseDate as ReleaseDate FROM Video v WHERE v.Duration > ? AND v.ReleaseDate > (curdate() - interval 1 year) AND v.ID NOT IN(SELECT Video FROM episode) ORDER BY title DESC`;
       conn.query(sql, params, (err, result, fields) => {
         if (err) {
@@ -305,7 +305,7 @@ app.get('/worst-app', (req, res) => {
     if (err) {
       res.status(500).json({"msg": err.sqlMessage})
     } else {
-      const params = [req.body['firstname'], req.body['lastname']];
+      const params = [req.query.firstName, req.query.lastName];
       const sql = 'select videoapp.App from app inner join platformapp inner join platform inner join videoapp left JOIN (Select wantstowatch.Video as Video from users inner join wantstowatch on users.Email = wantstowatch.User where users.FirstName = ? and users.LastName = ? Except Select userlikes.Video as Video from users inner join userlikes on users.Email = userlikes.User where users.FirstName = ? and users.LastName = ?) as ryans on app.Name = platformapp.App and platformapp.Platform = platform.Name and app.Name = videoapp.Video and videoapp.Video = ryans.Video where platform.Name = "IOS" group by videoapp.App having COUNT(*) = (select max(big.counts) from (SELECT videoapp.App, COUNT(*) as counts from app inner join platformapp inner join platform inner join videoapp left JOIN (Select wantstowatch.Video as Video from users inner join wantstowatch on users.Email = wantstowatch.User where users.FirstName = ? and users.LastName = ? Except Select userlikes.Video as Video from users inner join userlikes " on users.Email = userlikes.User where users.FirstName = ? and users.LastName = ?) as ryans on app.Name = platformapp.App and platformapp.Platform = platform.Name and app.Name = videoapp.Video and videoapp.Video = ryans.Video where platform.Name = "IOS" group by videoapp.App) as big)';
       conn.query(sql, params, (err, result, fields) => {
         if (err) {
@@ -407,7 +407,7 @@ app.get('/season', (req, res) => {
     if (err) {
       res.status(500).json({"msg": err.sqlMessage})
     } else {
-      const params = [req.body['video']];
+      const params = [req.query.video];
       const sql = 'select video.ID, video.ReleaseDate, video.Title as videoTitle, video.Description as videoDescription, shows.Name as showName, shows.Description as showDescription\n'
           + 'from video inner join season inner join shows\n'
           + 'on season.Video = video.ID and season.Shows = shows.Name\n'
@@ -448,7 +448,7 @@ app.get('/season', (req, res) => {
     if (err) {
       res.status(500).json({"msg": err.sqlMessage})
     } else {
-      const params = [req.body['app']];
+      const params = [req.query.app];
       const sql = 'SELECT *\n'
           + 'from shows inner join season\n'
           + 'where season.Number in\n'
