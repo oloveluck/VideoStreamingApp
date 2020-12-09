@@ -308,7 +308,7 @@ app.get('/worst-app', (req, res) => {
     if (err) {
       res.status(500).json({"msg": err.sqlMessage})
     } else {
-      const params = [req.body['firstname'], req.body['lastname']];
+      const params = [req.body['firstname'], req.body['lastname'],req.body['firstname'], req.body['lastname'], req.body['firstname'], req.body['lastname'], req.body['firstname'], req.body['lastname']];
       const sql = 'select videoapp.App\n'
           + 'from app inner join platformapp inner join platform inner join videoapp left JOIN\n'
           + '(Select towatch.Video as Video\n'
@@ -319,7 +319,7 @@ app.get('/worst-app', (req, res) => {
           + 'Select userlikes.Video as Video\n'
           + 'from users inner join userlikes\n'
           + 'on users.Email = userlikes.User\n'
-          + 'where users.FirstName = "Ryan" and users.LastName = "Milligan") as ryans\n'
+          + 'where users.FirstName = ? and users.LastName = ?) as ryans\n'
           + 'on app.Name = platformapp.App and platformapp.Platform = platform.Name and app.Name = videoapp.Video and videoapp.Video = ryans.Video\n'
           + 'where platform.Name = "IOS"\n'
           + 'group by videoapp.App\n'
@@ -334,7 +334,7 @@ app.get('/worst-app', (req, res) => {
           + 'Select userlikes.Video as Video\n'
           + 'from users inner join userlikes\n'
           + 'on users.Email = userlikes.User\n'
-          + 'where users.FirstName = "Ryan" and users.LastName = "Milligan") as ryans\n'
+          + 'where users.FirstName = ? and users.LastName = ?) as ryans\n'
           + 'on app.Name = platformapp.App and platformapp.Platform = platform.Name and app.Name = videoapp.Video and videoapp.Video = ryans.Video\n'
           + 'where platform.Name = "IOS"\n'
           + 'group by videoapp.App) as big)';
@@ -438,7 +438,7 @@ app.get('/season', (req, res) => {
     if (err) {
       res.status(500).json({"msg": err.sqlMessage})
     } else {
-      const params = [req.body['video']];
+      const params = [req.body['video'], req.body['video']];
       const sql = 'select video.ID, video.ReleaseDate, video.Title as videoTitle, video.Description as videoDescription, `show`.Name as showName, `show`.Description as showDescription\n'
           + 'from video inner join episode inner join `show`\n'
           + 'on episode.Video = video.ID and episode.Show = `show`.Name\n'
@@ -479,7 +479,7 @@ app.get('/appshows', (req, res) => {
     if (err) {
       res.status(500).json({"msg": err.sqlMessage})
     } else {
-      const params = [req.body['app']];
+      const params = [req.body['app'], req.body['app']];
       const sql = 'SELECT `show`.Name, `show`.Description\n'
           + 'from `show` inner join episode\n'
           + 'where episode.SeasonNumber in\n'
