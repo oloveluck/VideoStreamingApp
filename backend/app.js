@@ -438,7 +438,7 @@ app.get('/season', (req, res) => {
     if (err) {
       res.status(500).json({"msg": err.sqlMessage})
     } else {
-      const params = [req.body['video'], req.body['video']];
+      const params = [req.query['video'], req.query['video']];
       const sql = 'select video.ID, video.ReleaseDate, video.Title as videoTitle, video.Description as videoDescription, `show`.Name as showName, `show`.Description as showDescription\n'
           + 'from video inner join episode inner join `show`\n'
           + 'on episode.Video = video.ID and episode.Show = `show`.Name\n'
@@ -479,7 +479,7 @@ app.get('/appshows', (req, res) => {
     if (err) {
       res.status(500).json({"msg": err.sqlMessage})
     } else {
-      const params = [req.body['app'], req.body['app']];
+      const params = [req.query['app'], req.query['app']];
       const sql = 'SELECT `show`.Name, `show`.Description\n'
           + 'from `show` inner join episode\n'
           + 'where episode.SeasonNumber in\n'
