@@ -201,15 +201,15 @@ app.get('/free', (req, res) => {
     if (err) {
       res.status(500).json({"msg": err.sqlMessage})
     } else {
-      const params = [req.body['platform']];
+      const params = [req.query['platform']];
       const sql = `SELECT v.Title as title FROM Video v JOIN VideoApp va ON v.ID = va.Video JOIN App a ON a.Name = va.App WHERE va.Subscription = 0 AND v.Platform = ? ORDER BY title DESC;`;
       conn.query(sql, params, (err, result, fields) => {
         if (err) {
-          console.log(params)
           res.status(200).json({"msg": err.sqlMessage})
         } else {
           // for local testing only
           res.header("Access-Control-Allow-Origin", "*");
+          console.log('RESULT: ', result);
           res.status(200).json({
             rows: result
           });
@@ -227,7 +227,7 @@ app.get('/video/released', (req, res) => {
     if (err) {
       res.status(500).json({"msg": err.sqlMessage})
     } else {
-      const params = [req.body['duration']];
+      const params = [req.query['duration']];
       const sql = `SELECT v.Title as title, v.ReleaseDate as ReleaseDate FROM Video v WHERE v.Duration > ? AND v.ReleaseDate > (curdate() - interval 1 year) AND v.ID NOT IN(SELECT Video FROM episode) ORDER BY title DESC`;
       conn.query(sql, params, (err, result, fields) => {
         if (err) {
@@ -308,7 +308,7 @@ app.get('/worst-app', (req, res) => {
     if (err) {
       res.status(500).json({"msg": err.sqlMessage})
     } else {
-      const params = [req.body['firstname'], req.body['lastname'],req.body['firstname'], req.body['lastname'], req.body['firstname'], req.body['lastname'], req.body['firstname'], req.body['lastname']];
+      const params = [req.query['firstname'], req.query['lastname'],req.query['firstname'], req.query['lastname'], req.query['firstname'], req.query['lastname'], req.query['firstname'], req.query['lastname']];
       const sql = 'select videoapp.App\n'
           + 'from app inner join platformapp inner join platform inner join videoapp left JOIN\n'
           + '(Select towatch.Video as Video\n'
