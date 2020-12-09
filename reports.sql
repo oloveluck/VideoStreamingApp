@@ -26,7 +26,7 @@ FROM (((
     SELECT video.Title AS freeVideo
     FROM video INNER JOIN videoapp ON video.ID=videoapp.Video
     WHERE videoapp.Subscription = 0
-    ) AS fv INNER JOIN Video ON fv.freeVideo=video.ID) INNER JOIN wantstowatch ON wantstowatch.Video=video.ID) RIGHT JOIN users ON users.Email=wantstowatch.User
+    ) AS fv INNER JOIN Video ON fv.freeVideo=video.Title) INNER JOIN towatch ON towatch.Video=video.ID) RIGHT JOIN users ON users.Email=towatch.User
 ORDER BY Email ASC;
 /* List all videos that people want to watch and are free 
 1pt Strong motivation,
@@ -51,9 +51,9 @@ ORDER BY Email ASC;
 
 select videoapp.App
 from app inner join platformapp inner join platform inner join videoapp left JOIN
-(Select wantstowatch.Video as Video
-from users inner join wantstowatch
-on users.Email = wantstowatch.User
+(Select towatch.Video as Video
+from users inner join towatch
+on users.Email = towatch.User
 where users.FirstName = "Ryan" and users.LastName = "Milligan"
 Except
 Select userlikes.Video as Video
@@ -66,9 +66,9 @@ group by videoapp.App
 having COUNT(*) = (
 select max(big.counts) from (SELECT videoapp.App, COUNT(*) as counts
 from app inner join platformapp inner join platform inner join videoapp left JOIN
-(Select wantstowatch.Video as Video
-from users inner join wantstowatch
-on users.Email = wantstowatch.User
+(Select towatch.Video as Video
+from users inner join towatch
+on users.Email = towatch.User
 where users.FirstName = "Ryan" and users.LastName = "Milligan"
 Except
 Select userlikes.Video as Video
@@ -88,18 +88,18 @@ where clause not used for joins
 strong motivation as this is a useful function to creating lists and recommendations for a user
 */
 
-select video.ID, video.ReleaseDate, video.Title as videoTitle, video.Description as videoDescription, shows.Name as showName, shows.Description as showDescription
-from video inner join season inner join shows
-on season.Video = video.ID and season.Shows = shows.Name
-where season.Number IN
-(select season.Number
-from video left join season
-on season.Video = video.ID
+select video.ID, video.ReleaseDate, video.Title as videoTitle, video.Description as videoDescription, `show`.Name as showName, `show`.Description as showDescription
+from video inner join episode inner join `show`
+on episode.Video = video.ID and episode.Show = `show`.Name
+where episode.SeasonNumber IN
+(select episode.SeasonNumber
+from video left join episode
+on episode.Video = video.ID
 where video.Title = "The Child")
-and season.Shows IN 
-(select season.Shows
-from video left join season
-on season.Video = video.ID
+and episode.Show IN 
+(select episode.Show
+from video left join episode
+on episode.Video = video.ID
 where video.Title = "The Child")
 order by video.ID, video.Title
 
@@ -111,15 +111,16 @@ left join
 aggregate function
 ordering by multiple fields
 */
-SELECT *
-from shows inner join season
-where season.Number in
-(select season.number
-from app inner join videoapp inner join season
+SELECT `show`.Name, `show`.Description
+from `show` inner join episode
+where episode.SeasonNumber in
+(select episode.SeasonNumber
+from app inner join videoapp inner join episode
 where app.Name = "Netflix")
-and season.Shows IN
-(select season.Shows
-from app inner join videoapp inner join season
+and episode.Show IN
+(select episode.Show
+from app inner join videoapp inner join episode
 where app.Name = "Netflix")
-GROUP by shows.Name
-order by shows.Name, season.Video
+GROUP by `show`.Name
+order by `show`.Name, episode.Video
+
